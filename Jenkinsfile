@@ -20,9 +20,11 @@ volumes: [
           usernameVariable: 'DOCKER_USER',
           passwordVariable: 'DOCKER_PASSWORD']]){
             //echo "DOCKER_REGISTRY=${harborRegistry}" >> /etc/environment
-            sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} https://harbor.arakaki.in"
-            sh "docker build -t harbor.arakaki.in/project/springboot-example-app:${gitCommit} ."
-            sh "docker push harbor.arakaki.in/project/springboot-example-app:${gitCommit}"
+            sh """
+               docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} https://harbor.arakaki.in
+               docker build -t harbor.arakaki.in/project/springboot-example-app:${gitCommit} .
+               docker push harbor.arakaki.in/project/springboot-example-app:${gitCommit}
+               """
         }
       }
     }
