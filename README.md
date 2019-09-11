@@ -46,15 +46,6 @@ Here is what this little application demonstrates:
 
 Here are some endpoints you can call:
 
-### Get information about system health, configurations, etc.
-
-```
-http://localhost:8091/env
-http://localhost:8091/health
-http://localhost:8091/info
-http://localhost:8091/metrics
-```
-
 ### Create a hotel resource
 
 ```
@@ -182,7 +173,4 @@ or
 java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -Dspring.profiles.active=test -Ddebug -jar target/spring-boot-rest-example-0.5.0.war
 ```
 and then you can connect to it remotely using your IDE. For example, from IntelliJ You have to add remote debug configuration: Edit configuration -> Remote.
-
-# Questions and Comments: khoubyari@gmail.com
-
 
