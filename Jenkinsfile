@@ -12,7 +12,7 @@ volumes: [
     def gitBranch = myRepo.GIT_BRANCH
     def shortGitCommit = "${gitCommit[0..10]}"
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
-    def harborRegistry = $"${HARBOR_REGISTRY}"
+    def harborRegistry = "${HARBOR_REGISTRY}"
     stage('Create Docker images') {
       container('docker') {
         withCredentials([[$class: 'UsernamePasswordMultiBinding',
