@@ -41,6 +41,10 @@ volumes: [
         }
       }
     }
-
+    stage('Helm Upgrade') {
+      container('helm') {
+        sh "helm upgrade app ./springboot-example-app-chart --namespace ${gitBranch} --set-image.tag=${gitCommit}"
+      }
+    }
   }
 }
