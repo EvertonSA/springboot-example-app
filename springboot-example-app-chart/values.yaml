@@ -1,0 +1,23 @@
+# Default values for springboot-example-app-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: harbor.arakaki.in/project/springboot-example-app
+  tag: a71465d7e888a0a402567b09da945565431d7b21
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: [{"name": "regcred"}]
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+virtualService:
+  host: backend-spring.arakaki.in
