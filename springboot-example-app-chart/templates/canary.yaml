@@ -32,12 +32,12 @@ spec:
     interval: 10s
     threshold: 10
     maxWeight: 50
-    stepWeight: 5
+    stepWeight: 10
     metrics:
     # https://docs.flagger.app/how-it-works#http-metrics
     - name: request-success-rate    
       threshold: 99
-      interval: 10m
+      interval: 10s
     - name: request-duration
       threshold: 500
       interval: 3s
