@@ -12,3 +12,4 @@ spec:
   - route:
     - destination:
         host: {{ include "springboot-example-app-chart.fullname" . }}
+{{- end }}
