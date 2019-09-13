@@ -26,6 +26,7 @@ virtualService:
 
 canary:
   enabled: false
+  skipAnalisys: false
   hpa:
     minReplicas: 1
     maxReplicas: 4
