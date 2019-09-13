@@ -23,6 +23,22 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 3
+            failureThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 20
+            timeoutSeconds: 2
+            periodSeconds: 8
+            failureThreshold: 1
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
