@@ -22,7 +22,7 @@ spec:
       - {{ .Values.virtualService.host }}
     {{ end }}
     # container port
-    port: {{ .Values.service.targetPort }}
+    #port: {{ .Values.service.targetPort }}
     trafficPolicy:
       tls:
         mode: DISABLE
