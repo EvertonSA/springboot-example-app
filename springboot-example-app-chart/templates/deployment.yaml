@@ -24,13 +24,19 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           readinessProbe:
-            exec:
-              command: ["sh", "-c", "curl -s http://localhost:8080/health"]
-            initialDelaySeconds: 60
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 180
+            timeoutSeconds: 10
+            failureThreshold: 10
           livenessProbe:
-            exec:
-              command: ["sh", "-c", "curl -s http://localhost:8080/"]
-            initialDelaySeconds: 20
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 10
+            failureThreshold: 10
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
