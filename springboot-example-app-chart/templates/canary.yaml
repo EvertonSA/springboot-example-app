@@ -1,0 +1,61 @@
+{{- if .Values.canary.enabled -}}
+apiVersion: flagger.app/v1alpha3
+kind: Canary
+metadata:
+  name: {{ include "springboot-example-app-chart.fullname" . }}
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "springboot-example-app-chart.fullname" . }}
+  progressDeadlineSeconds: 300
+  autoscalerRef:
+    apiVersion: autoscaling/v2beta1
+    kind: HorizontalPodAutoscaler
+    name: {{ include "springboot-example-app-chart.fullname" . }}
+  service:
+    {{- if .Values.virtualService.enabled -}}
+    gateways:
+      - public-gateway.istio-system.svc.cluster.local
+      - mesh
+    hosts:
+      - {{ .Values.virtualService.host }}
+    {{- end }}
+    # container port
+    port: {{ .Values.service.targetPort }}
+    trafficPolicy:
+      tls:
+        mode: DISABLE
+  skipAnalysis: {{ .Values.canary.enabled }}
+  # https://docs.flagger.app/how-it-works#canary-analysis
+  canaryAnalysis:
+    interval: 10s
+    threshold: 10
+    maxWeight: 50
+    stepWeight: 5
+    metrics:
+    # https://docs.flagger.app/how-it-works#http-metrics
+    - name: request-success-rate    
+      threshold: 99
+      interval: 1m
+    - name: request-duration
+      threshold: 500
+      interval: 30s
+    # webhooks:
+    #   - name: load-test
+    #     url: http://flagger-loadtester.dev/
+    #     timeout: 5s
+    #     metadata:
+    #       type: cmd
+    #       cmd: "hey -z 1m -q 10 -c 2 http://backend-spring-canary.dev:8080/"
+    #       logCmdOutput: "true"
+{{- end }}
+
+# webhooks:
+#   - name: load-test
+#     url: http://flagger-loadtester.dev/
+#     timeout: 5s
+#     metadata:
+#       type: cmd
+#       cmd: "hey -z 1m -q 10 -c 2 http://backend-spring-canary.dev:8080/"
+#       logCmdOutput: "true"

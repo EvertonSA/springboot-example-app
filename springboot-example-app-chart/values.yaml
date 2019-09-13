@@ -19,5 +19,13 @@ service:
   port: 80
   targetPort: 8080
 
+# is your service going to be available externally?
 virtualService:
+  enabled: true
   host: backend-spring.arakaki.in
+
+canary:
+  enabled: false
+  hpa:
+    minReplicas: 1
+    maxReplicas: 4
