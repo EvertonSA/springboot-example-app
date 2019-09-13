@@ -26,7 +26,7 @@ spec:
     trafficPolicy:
       tls:
         mode: DISABLE
-  skipAnalysis: {{ .Values.canary.enabled }}
+  skipAnalysis: {{ .Values.canary.skipAnalisys }}
   # https://docs.flagger.app/how-it-works#canary-analysis
   canaryAnalysis:
     interval: 10s
@@ -37,10 +37,10 @@ spec:
     # https://docs.flagger.app/how-it-works#http-metrics
     - name: request-success-rate    
       threshold: 99
-      interval: 1m
+      interval: 10m
     - name: request-duration
       threshold: 500
-      interval: 30s
+      interval: 3s
     # webhooks:
     #   - name: load-test
     #     url: http://flagger-loadtester.dev/
