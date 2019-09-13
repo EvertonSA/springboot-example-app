@@ -27,6 +27,7 @@ virtualService:
 # do you want canary?
 canary:
   enabled: false
+  # sometimes you need canary but you do need the analisys...
   skipAnalisys: false
   hpa:
     minReplicas: 1

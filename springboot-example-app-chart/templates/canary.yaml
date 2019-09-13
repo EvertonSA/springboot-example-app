@@ -43,10 +43,10 @@ spec:
       interval: {{ .Values.canary.interval }}
     webhooks:
       - name: load-test
-        url: http://flagger-loadtester/
+        url: http://flagger-loadtester.{{ .Release.Namespace }}/
         timeout: 5s
         metadata:
           type: cmd
-          cmd: "hey -z {{ .Values.canary.interval }} -q 10 -c 2 http://{{ include "springboot-example-app-chart.fullname" . }}-canary:{{ .Values.service.targetPort }}/"
+          cmd: "hey -z {{ .Values.canary.interval }} -q 10 -c 2 http://{{ include "springboot-example-app-chart.fullname" . }}-canary.{{ .Release.Namespace }}:{{ .Values.service.targetPort }}/"
           logCmdOutput: "true"
 {{- end }}
