@@ -24,9 +24,18 @@ virtualService:
   enabled: true
   host: backend-spring.arakaki.in
 
+# do you want canary?
 canary:
   enabled: false
   skipAnalisys: false
   hpa:
     minReplicas: 1
     maxReplicas: 4
+  # schedule interval
+  interval: 1m
+  # max number of failed metric checks before rollback
+  threshold: 10
+  # max traffic percentage routed to canary before rollout 
+  maxWeight: 50
+  # canary increment step
+  stepWeight: 10

@@ -29,33 +29,24 @@ spec:
   skipAnalysis: {{ .Values.canary.skipAnalisys }}
   # https://docs.flagger.app/how-it-works#canary-analysis
   canaryAnalysis:
-    interval: 10s
-    threshold: 10
-    maxWeight: 50
-    stepWeight: 10
+    interval: {{ .Values.canary.interval }}
+    threshold: {{ .Values.canary.threshold }}
+    maxWeight: {{ .Values.canary.maxWeight }}
+    stepWeight: {{ .Values.canary.stepWeight }}
     metrics:
     # https://docs.flagger.app/how-it-works#http-metrics
     - name: request-success-rate    
       threshold: 99
-      interval: 10s
+      interval: {{ .Values.canary.interval }}
     - name: request-duration
       threshold: 500
-      interval: 3s
+      interval: {{ .Values.canary.interval }}
     webhooks:
       - name: load-test
         url: http://flagger-loadtester/
         timeout: 5s
         metadata:
           type: cmd
-          cmd: "hey -z 1m -q 10 -c 2 http://{{ include "springboot-example-app-chart.fullname" . }}-canary:8080/"
+          cmd: "hey -z {{ .Values.canary.interval }} -q 10 -c 2 http://{{ include "springboot-example-app-chart.fullname" . }}-canary:{{ .Values.service.targetPort }}/"
           logCmdOutput: "true"
 {{- end }}
-
-# webhooks:
-#   - name: load-test
-#     url: http://flagger-loadtester.dev/
-#     timeout: 5s
-#     metadata:
-#       type: cmd
-#       cmd: "hey -z 1m -q 10 -c 2 http://backend-spring-canary.dev:8080/"
-#       logCmdOutput: "true"
