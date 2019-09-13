@@ -57,16 +57,16 @@ volumes: [
         }
       }
     }
-    // stage('Helm Upgrade') {
-    //   if(env.BRANCH_NAME == 'dev'){
-    //     container('helm') {
-    //       sh "helm upgrade dev-release ./springboot-example-app-chart --namespace dev --set=image.tag=${gitCommit}"
-    //     }
-    //   } else if (env.BRANCH_NAME == 'master') {
-    //     container('helm') {
-    //       sh "helm upgrade prd-release ./springboot-example-app-chart --namespace prd --set=image.tag=${gitCommit} --set=canary.enabled=true"
-    //     }
-    //   }
-    // }
+    stage('Helm Upgrade') {
+      if(env.BRANCH_NAME == 'dev'){
+        container('helm') {
+          sh "helm upgrade app-dev-release ./springboot-example-app-chart --namespace dev --set=image.tag=${gitCommit} --set=virtualService.host=backend-spring-dev.arakaki.in"
+        }
+      } else if (env.BRANCH_NAME == 'master') {
+        container('helm') {
+          sh "helm upgrade app-prd-release ./springboot-example-app-chart --namespace prd --set=image.tag=stable-${gitCommit} --set=virtualService.host=backend-spring.arakaki.in --set=canary.enabled=true"
+        }
+      }
+    }
   }
 }
