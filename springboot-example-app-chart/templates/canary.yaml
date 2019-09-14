@@ -14,13 +14,13 @@ spec:
     kind: HorizontalPodAutoscaler
     name: {{ include "springboot-example-app-chart.fullname" . }}
   service:
-    {{ if .Values.canary.virtualService.enabled }}
-    gateways:
-      - public-gateway.istio-system.svc.cluster.local
-      - mesh
-    hosts:
-      - {{ .Values.canary.virtualService.host }}
-    {{ end }}
+    # {{ if .Values.canary.virtualService.enabled }}
+    # gateways:
+    #   - public-gateway.istio-system.svc.cluster.local
+    #   - mesh
+    # hosts:
+    #   - {{ .Values.canary.virtualService.host }}
+    # {{ end }}
     # container port
     port: {{ .Values.service.targetPort }}
     trafficPolicy:
