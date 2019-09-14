@@ -19,16 +19,13 @@ service:
   port: 80
   targetPort: 8080
 
-# is your service going to be available externally?
-virtualService:
-  enabled: true
-  host: backend-spring.arakaki.in
-
-# do you want canary?
 canary:
-  enabled: false
+  enabled: true
   # sometimes you need canary but you do need the analisys...
   skipAnalisys: false
+  virtualService:
+    enabled: false
+    host:
   hpa:
     minReplicas: 1
     maxReplicas: 4
@@ -40,3 +37,9 @@ canary:
   maxWeight: 50
   # canary increment step
   stepWeight: 10
+
+# ONLY ENABLE WHEN (CANARY IS FALSE) AND (EXTERNALACCESS IS FALSE)
+virtualService:
+  enabled: false
+  host: backend-spring.arakaki.in
+

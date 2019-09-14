@@ -60,11 +60,11 @@ volumes: [
     stage('Helm Upgrade') {
       if(env.BRANCH_NAME == 'dev'){
         container('helm') {
-          sh "helm upgrade app-dev-release ./springboot-example-app-chart --namespace dev --set=image.tag=${gitCommit} --set=virtualService.host=backend-spring-dev.arakaki.in"
+          sh "helm upgrade app-dev-release ./springboot-example-app-chart --namespace dev --set=image.tag=${gitCommit} --set=canary.enabled=false --set=virtualService.enabled=true --set=virtualService.host=backend-spring-dev.arakaki.in"
         }
       } else if (env.BRANCH_NAME == 'master') {
         container('helm') {
-          sh "helm upgrade app-prd-release ./springboot-example-app-chart --namespace prd --set=image.tag=stable-${gitCommit} --set=virtualService.host=backend-spring.arakaki.in --set=canary.enabled=true"
+          sh "helm upgrade app-prd-release ./springboot-example-app-chart --namespace prd --set=image.tag=stable-${gitCommit} --set=canary.enabled=true --set=canary.virtualService.enabled=true --set=canary.virtualService.host=backend-spring.arakaki.in --namespace prd"
         }
       }
     }
