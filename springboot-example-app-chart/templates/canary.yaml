@@ -47,6 +47,6 @@ spec:
         timeout: 5s
         metadata:
           type: cmd
-          cmd: "hey -z {{ .Values.canary.interval }} -q 10 -c 2 http://{{ include "springboot-example-app-chart.fullname" . }}-canary.{{ .Release.Namespace }}:{{ .Values.service.targetPort }}/"
+          cmd: "hey -z {{ .Values.canary.interval }} -q 10 -c 2 http://{{ include "springboot-example-app-chart.fullname" . }}-canary.{{ .Release.Namespace }}:{{ .Values.service.targetPort }}/health"
           logCmdOutput: "true"
 {{- end }}
