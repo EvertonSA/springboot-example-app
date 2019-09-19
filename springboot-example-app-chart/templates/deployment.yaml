@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "springboot-example-app-chart.fullname" . }}
+  name: {{ .Chart.Name }}
   labels:
 {{ include "springboot-example-app-chart.labels" . | indent 4 }}
 spec:

@@ -15,11 +15,11 @@ volumes: [
     def shortGitCommit = "${gitCommit[0..10]}"
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
     def harborRegistry = "${HARBOR_REGISTRY}"
-    // stage('Unit Test with Maven') {
-    //   container('maven') {
-    //     sh "mvn test"
-    //   }
-    // }
+    stage('Unit Test with Maven') {
+      container('maven') {ble
+        sh "mvn test"
+      }
+    }
     // stage('Code Quality with Sonar'){
     //     container('maven'){
     //         //TODO: get sonar registry via Jenkins env variable
@@ -64,7 +64,7 @@ volumes: [
         }
       } else if (env.BRANCH_NAME == 'master') {
         container('helm') {
-          sh "helm upgrade app-prd-release ./springboot-example-app-chart --namespace prd --set=image.tag=stable-${gitCommit} --set=canary.enabled=true --set=canary.virtualService.enabled=true --set=canary.virtualService.host=backend-spring.arakaki.in --namespace prd"
+          sh "helm upgrade app-prd-release ./springboot-example-app-chart --namespace prd --set=image.tag=stable-${gitCommit} --set=canary.enabled=true --set=canary.virtualService.enabled=true --set=canary.virtualService.host=backend-spring.arakaki.in"
         }
       }
     }

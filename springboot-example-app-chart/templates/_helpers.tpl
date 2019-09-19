@@ -38,8 +38,10 @@ Common labels
 app.kubernetes.io/name: {{ include "springboot-example-app-chart.name" . }}
 helm.sh/chart: {{ include "springboot-example-app-chart.chart" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app: {{ .Chart.Name }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
+

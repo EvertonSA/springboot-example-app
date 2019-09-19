@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: harbor.arakaki.in/project/springboot-example-app
-  tag: a71465d7e888a0a402567b09da945565431d7b21
+  tag: 9e6ccf1ff0d6153aa5156c475abd58eacf7397e5
   pullPolicy: IfNotPresent
 
 imagePullSecrets: [{"name": "regcred"}]

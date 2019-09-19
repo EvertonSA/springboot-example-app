@@ -14,14 +14,14 @@ spec:
     kind: HorizontalPodAutoscaler
     name: {{ include "springboot-example-app-chart.fullname" . }}
   service:
-    # {{ if .Values.canary.virtualService.enabled }}
-    # gateways:
-    #   - public-gateway.istio-system.svc.cluster.local
-    #   - mesh
-    # hosts:
-    #   - {{ .Values.canary.virtualService.host }}
-    # {{ end }}
-    # container port
+    {{ if .Values.canary.virtualService.enabled }}
+    gateways:
+      - public-gateway.istio-system.svc.cluster.local
+      - mesh
+    hosts:
+      - {{ .Values.canary.virtualService.host }}
+    {{ end }}
+    #container port
     port: {{ .Values.service.targetPort }}
     trafficPolicy:
       tls:
@@ -33,20 +33,8 @@ spec:
     threshold: {{ .Values.canary.threshold }}
     maxWeight: {{ .Values.canary.maxWeight }}
     stepWeight: {{ .Values.canary.stepWeight }}
-    metrics:
-    # https://docs.flagger.app/how-it-works#http-metrics
-    - name: request-success-rate    
-      threshold: 99
-      interval: {{ .Values.canary.interval }}
-    - name: request-duration
-      threshold: 500
-      interval: {{ .Values.canary.interval }}
     webhooks:
-      - name: load-test
-        url: http://flagger-loadtester.{{ .Release.Namespace }}/
-        timeout: 5s
-        metadata:
-          type: cmd
-          cmd: "hey -z {{ .Values.canary.interval }} -q 10 -c 2 http://{{ include "springboot-example-app-chart.fullname" . }}-canary.{{ .Release.Namespace }}:{{ .Values.service.targetPort }}/health"
-          logCmdOutput: "true"
+        - name: "Jenkins Confirm Weebhook"
+          type: confirm-rollout
+          url: http://flagger-loadtester.test/gate/approve
 {{- end }}
