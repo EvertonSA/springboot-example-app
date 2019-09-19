@@ -16,7 +16,7 @@ volumes: [
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
     def harborRegistry = "${HARBOR_REGISTRY}"
     // stage('Unit Test with Maven') {
-    //   container('maven') {ble
+    //   container('maven') {
     //     sh "mvn test"
     //   }
     // }
