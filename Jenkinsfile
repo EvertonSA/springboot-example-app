@@ -15,11 +15,11 @@ volumes: [
     def shortGitCommit = "${gitCommit[0..10]}"
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
     def harborRegistry = "${HARBOR_REGISTRY}"
-    // stage('Unit Test with Maven') {
-    //   container('maven') {
-    //     sh "mvn test"
-    //   }
-    // }
+    stage('Unit Test with Maven') {
+      container('maven') {
+        sh "mvn test"
+      }
+    }
     // stage('Code Quality with Sonar'){
     //     container('maven'){
     //         //TODO: get sonar registry via Jenkins env variable
